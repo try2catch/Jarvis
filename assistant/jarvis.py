@@ -15,7 +15,6 @@ class Jarvis:
         threading.Thread(target=self.run()).start()
 
     def read_voice_cmd(self):
-        print(...)
         voice_input = ''
         try:
             with sr.Microphone() as source:
@@ -35,6 +34,7 @@ class Jarvis:
 
     def run(self):
         session = False
+        Utils.playsound('Hello Sir, Welcome to your universe.')
         while True:
             intent = ''
             voice_note = self.read_voice_cmd()

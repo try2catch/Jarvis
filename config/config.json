@@ -26,5 +26,15 @@
       "Ok sir.",
       "sure sir."
     ]
+  },
+  "intent_music": {
+    "utterances": [
+      "play music",
+      "next song",
+      "stop music"
+    ],
+    "response": [
+      "sure sir."
+    ]
   }
 }

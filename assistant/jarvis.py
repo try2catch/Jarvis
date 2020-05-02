@@ -2,8 +2,10 @@ import threading
 
 import speech_recognition as sr
 
+from intents import music
 from intents.applications import Applications
 from intents.greeting import Greeting
+from intents.music.itune import ITune
 from utils.utils import Utils
 
 
@@ -37,6 +39,10 @@ class Jarvis:
         Utils.playsound('Hello Sir, Welcome to your universe.')
         while True:
             intent = ''
+
+            if music.state() == 'paused' and session is False:
+                music.play()
+
             voice_note = self.read_voice_cmd()
             for key in self.config:
                 utterances = Utils.match_pattern(voice_note, self.config[key]['utterances'])
@@ -46,7 +52,13 @@ class Jarvis:
                     break
 
             if intent == 'intent_greeting':
-                Greeting(self.logger, response).speak()
+                greeting = Greeting(self.logger, response)
+                if music.state() == 'playing':
+                    music.pause()
+                    greeting.speak()
+                else:
+                    greeting.speak()
+
                 session = True
                 continue
             elif intent == 'intent_applications':
@@ -56,3 +68,6 @@ class Jarvis:
                                  command=voice_note).launch()
                     session = False
                     continue
+            elif intent == 'intent_music':
+                ITune(self.logger).launch(voice_note)
+                continue

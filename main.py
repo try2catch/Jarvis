@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from assistant.jarvis import Jarvis
 
@@ -10,7 +11,9 @@ def read_config():
 
 
 if __name__ == '__main__':
+    os_name = os.uname().sysname
+
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(levelname)s:%(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
-    Jarvis(logger=logging, config=read_config())
+    Jarvis(logger=logging, config=read_config(), os_name=os_name)

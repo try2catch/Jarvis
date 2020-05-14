@@ -10,9 +10,11 @@ from utils.utils import Utils
 
 
 class Jarvis:
-    def __init__(self, logger, config):
+    def __init__(self, logger, config, os_name):
         self.logger = logger
         self.config = config
+        self.os_name = os_name
+        self.utils = Utils(self.logger)
         self.speech = sr.Recognizer()
         threading.Thread(target=self.run()).start()
 
@@ -36,7 +38,7 @@ class Jarvis:
 
     def run(self):
         session = False
-        Utils.playsound('Hello Sir, Welcome to your universe.')
+        self.utils.playsound('Hello Sir, Welcome to your universe.', self.os_name)
         while True:
             intent = ''
 
@@ -52,7 +54,7 @@ class Jarvis:
                     break
 
             if intent == 'intent_greeting':
-                greeting = Greeting(self.logger, response)
+                greeting = Greeting(self.logger, response, os_name=self.os_name)
                 if music.state() == 'playing':
                     music.pause()
                     greeting.speak()
@@ -65,7 +67,7 @@ class Jarvis:
                 if session:
                     applications = self.config[key]['applications']
                     Applications(logger=self.logger, response=response, applications=applications,
-                                 command=voice_note).launch()
+                                 command=voice_note, os_name=self.os_name).launch()
                     session = False
                     continue
             elif intent == 'intent_music':

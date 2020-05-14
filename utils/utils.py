@@ -2,10 +2,13 @@ import os
 import random
 import re
 
+import pyttsx3
+
 
 class Utils:
     def __init__(self, logger):
         self.logger = logger
+        self.engine = pyttsx3.init()
 
     @staticmethod
     def normalize_utterances(utterances):
@@ -30,6 +33,9 @@ class Utils:
     def choose_random(response):
         return random.choice(response)
 
-    @staticmethod
-    def playsound(response):
-        os.system('say "{}"'.format(response))
+    def playsound(self, response, os_name):
+        if os_name == 'Darwin':
+            os.system('say "{}"'.format(response))
+        else:
+            self.engine.say(response)
+            self.engine.runAndWait()

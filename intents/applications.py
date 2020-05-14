@@ -4,9 +4,11 @@ from utils.utils import Utils
 
 
 class Applications:
-    def __init__(self, logger, response, applications, command):
+    def __init__(self, logger, response, applications, command, os_name):
         self.logger = logger
         self.response = response
+        self.os_name = os_name
+        self.utils = Utils(self.logger)
         self.applications = applications
         self.command = command
 
@@ -25,7 +27,11 @@ class Applications:
         path = self.get_path()
         self.logger.info('App path : {}'.format(path))
         if path:
-            Utils.playsound(self.response)
-            os.system('open {}'.format(path))
+            self.utils.playsound(self.response, self.os_name)
+            if self.os_name == 'Darwin':
+                os.system('open {}'.format(path))
+            else:
+                os.system('explorer {}'.format(path))
         else:
-            Utils.playsound('I am sorry Sir. The app which you are looking for, is not register into my database.')
+            self.utils.playsound('I am sorry Sir. The app which you are looking for, is not register into my database.',
+                                 self.os_name)

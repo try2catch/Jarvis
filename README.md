@@ -1,11 +1,13 @@
-# Jarvis
+Hello Friends,
 
-One should always include a readme.md (markdown) file in every repository.
+OS Compatible : MAC/Windows
 
+Python Version : 3.7
 
-It is a good habit to follow, and it gives you a good place to start.
+Possible errors:
 
-Possibly it should give you an idea of what to expect.
+Not able to install PyAduio : 
+  Download .whl file from link and install : https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
 
-
-HERE is an example.
+  pip install #path of the wheel file
+  

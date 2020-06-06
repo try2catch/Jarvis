@@ -9,14 +9,14 @@ from intents.music.itune import ITune
 from utils.utils import Utils
 
 
-class Jarvis:
+class Jarvis(threading.Thread):
     def __init__(self, logger, config, os_name):
+        threading.Thread.__init__(self)
         self.logger = logger
         self.config = config
         self.os_name = os_name
         self.utils = Utils(self.logger)
         self.speech = sr.Recognizer()
-        threading.Thread(target=self.run()).start()
 
     def read_voice_cmd(self):
         voice_input = ''
@@ -37,6 +37,7 @@ class Jarvis:
         return voice_input.lower()
 
     def run(self):
+        self.logger.info('Thread is running...')
         session = False
         self.utils.playsound('Hello Sir, Welcome to your universe.', self.os_name)
         while True:

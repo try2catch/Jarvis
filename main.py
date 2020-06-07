@@ -25,7 +25,6 @@ if __name__ == '__main__':
     jarvis = Jarvis(logger=logging, config=read_json(), os_name=operating_system)
 
     app = QApplication(sys.argv)
-
     gui = GUI()
 
     jarvis.start()

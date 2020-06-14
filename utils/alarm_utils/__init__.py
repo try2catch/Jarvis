@@ -1,0 +1,5 @@
+time_regex = '(^|[^a-z])(0?[1-9])(:[0-5][0-9]){1,2}([^a-z]|$)'
+day_night_regex = '(^|[^0-9])([AP]M|[AP][.]M[.]|Noon|Midnight)([^0-9a-z]|$)'
+days_regex = '(^|[^0-9a-z])(monday|tuesday|wednesday|thursday|friday|saturday|sunday)([^0-9a-z]|$)'
+date_regex = '(^|[^0-9a-z])([0-9][0-9])([^0-9a-z]|$)'
+period_regex = '(^|[^0-9a-z])(today|yesterday|tomorrow)([^0-9a-z]|$)'

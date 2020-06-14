@@ -36,5 +36,26 @@
     "response": [
       "sure sir."
     ]
+  },
+  "intent_alarm": {
+    "utterances": [
+      "set alarm",
+      "wake me up"
+    ],
+    "response": [
+      "sure sir.",
+      "ok sir",
+      "alarm set for you"
+    ]
+  },
+  "intent_reminder": {
+    "utterances": [
+      "set reminder",
+      "remind me"
+    ],
+    "response": [
+      "sure sir.",
+      "reminder set for you"
+    ]
   }
 }

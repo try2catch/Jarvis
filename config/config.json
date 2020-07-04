@@ -51,10 +51,12 @@
   "intent_reminder": {
     "utterances": [
       "set reminder",
+      "set a reminder",
       "remind me"
     ],
     "response": [
       "sure sir.",
+      "ok sir",
       "reminder set for you"
     ]
   }

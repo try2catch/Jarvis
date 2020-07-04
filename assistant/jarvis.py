@@ -2,10 +2,13 @@ import threading
 
 import speech_recognition as sr
 
-from intents import music
+# from intents import music
 from intents.applications import Applications
 from intents.greeting import Greeting
 from intents.music.itune import ITune
+from intents.alarm import Alarm
+from intents.reminder import Reminder
+
 from utils.utils import Utils
 
 
@@ -22,6 +25,7 @@ class Jarvis(threading.Thread):
         voice_input = ''
         try:
             with sr.Microphone() as source:
+                self.logger.info('Listening...')
                 audio = self.speech.listen(source=source, timeout=5, phrase_time_limit=5)
             voice_input = self.speech.recognize_google(audio)
             self.logger.info('Input : {}'.format(voice_input))
@@ -39,29 +43,29 @@ class Jarvis(threading.Thread):
     def run(self):
         self.logger.info('Thread is running...')
         session = False
-        self.utils.playsound('Hello Sir, Welcome to your universe.', self.os_name)
+        # self.utils.playsound('Hello Sir, Welcome to your universe.', self.os_name)
         while True:
             intent = ''
 
-            if music.state() == 'paused' and session is False:
-                music.play()
+            # if music.state() == 'paused' and session is False:
+            #     music.play()
 
             voice_note = self.read_voice_cmd()
             for key in self.config:
                 utterances = Utils.match_pattern(voice_note, self.config[key]['utterances'])
                 if utterances:
                     intent = key
+                    self.logger.info(intent)
                     response = Utils.choose_random(self.config[key]['response'])
                     break
 
             if intent == 'intent_greeting':
                 greeting = Greeting(self.logger, response, os_name=self.os_name)
-                if music.state() == 'playing':
-                    music.pause()
-                    greeting.speak()
-                else:
-                    greeting.speak()
-
+                # if music.state() == 'playing':
+                #     music.pause()
+                #     greeting.speak()
+                # else:
+                greeting.speak()
                 session = True
                 continue
             elif intent == 'intent_applications':
@@ -73,4 +77,12 @@ class Jarvis(threading.Thread):
                     continue
             elif intent == 'intent_music':
                 ITune(self.logger).launch(voice_note)
+                continue
+            elif intent == 'intent_alarm':
+                Alarm(self.logger, voice_note, response, self.os_name).start()
+                continue
+            elif intent == 'intent_reminder':
+                self.utils.playsound('What would be the reminder sir?', self.os_name)
+                reminder = self.read_voice_cmd()
+                Reminder(self.logger, voice_note, reminder, response, self.os_name).start()
                 continue
